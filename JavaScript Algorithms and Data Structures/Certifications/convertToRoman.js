@@ -3,22 +3,66 @@ Roman Numeral Converter
 
 Convert the given number into a roman numeral.
 All roman numerals answers should be provided in upper-case.
+
+Util para crear los numeros romanos:
+https://www.rapidtables.com/convert/number/how-number-to-roman-numerals.html
 */
 
-
 function convertToRoman(num) {
+
+
     let i = 10;
     let arr = [];
-    
+
     while (num > i / 10) {
         arr.unshift(num % i - num % (i / 10));
         i *= 10;
     }
-
-    return num;
+    
+    return arr;    
 }
 
+2000
+
+function findRoman(num) {
+    let romans = {
+        1: 'I',
+        4: 'IV',
+        5: 'V',
+        9: 'IX',
+        10: 'X',
+        40: 'XL',
+        50: 'L',
+        90: 'XC',
+        100: 'C',
+        400: 'CD',
+        500: 'D',
+        900: 'CM',
+        1000: 'M'
+    }
  
+
+        return keys(romans).reduce((highestNum, cur) => {
+            if (num%cur === 0) {
+                highestNum = cur;
+            }
+            return highestNum;
+        }, 0)
+ 
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
 // The simple answer is to divide the number by 1000 whatever is the quotient that is the number of 1000's in the amount. 
 // Then divide the remainder with the 100's the quotient will be the number of 100's. And then again divide the remainder with 10, the quotient will be the number of 10's
 

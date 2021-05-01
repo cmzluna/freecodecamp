@@ -11,6 +11,34 @@ function convertToRoman(num) {
     return num;
 }
 
+ 
+// The simple answer is to divide the number by 1000 whatever is the quotient that is the number of 1000's in the amount. 
+// Then divide the remainder with the 100's the quotient will be the number of 100's. And then again divide the remainder with 10, the quotient will be the number of 10's
+
+function breakNumber(num) {
+    const placeValue = (num, res = [], factor = 1) => {
+        if (num) {
+            const val = (num % 10) * factor;
+            res.unshift(val);
+            return placeValue(Math.floor(num / 10), res, factor * 10);
+        };
+        return res;
+    };
+}
+
+//otra forma:
+function breakNumber(num) {
+    let i = 10;
+    while (num > i / 10) {
+        console.log(num % i - num % (i / 10));
+        i *= 10;
+    }
+}
+breakNumber(43928)
+
+// pistas:
+//  https://stackoverflow.com/questions/20015462/find-out-how-many-thousands-and-hundreds-and-tens-are-there-in-a-amount
+
 console.log(convertToRoman(2), 'II') 
 console.log(convertToRoman(3), 'III') 
 console.log(convertToRoman(4), 'IV') 

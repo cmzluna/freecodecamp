@@ -7,6 +7,13 @@ All roman numerals answers should be provided in upper-case.
 
 
 function convertToRoman(num) {
+    let i = 10;
+    let arr = [];
+    
+    while (num > i / 10) {
+        arr.unshift(num % i - num % (i / 10));
+        i *= 10;
+    }
 
     return num;
 }

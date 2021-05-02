@@ -1,28 +1,5 @@
-/*
-Roman Numeral Converter
 
-Convert the given number into a roman numeral.
-All roman numerals answers should be provided in upper-case.
-
-Util para crear los numeros romanos:
-https://www.rapidtables.com/convert/number/how-number-to-roman-numerals.html
-*/
-
-function convertToRoman(num) {
-    let i = 10;
-    let arr = [];
-
-    while (num > i / 10) {
-        arr.unshift(num % i - num % (i / 10));
-        i *= 10;
-    }
-    
-    return arr.reduce((acum,cur) => {
-        return acum.concat(findRoman(cur));
-    }, '');    
-}
-
-function findRoman(num) {
+function convertToRoman(num, outRoman = "") {
     let romans = {
         1: 'I',
         4: 'IV',
@@ -39,61 +16,28 @@ function findRoman(num) {
         1000: 'M'
     }
 
-    let outNumber = ''
+    if(num === 0) {
+         // base case -> num = 0
+        return outRoman;
+    } else {
+        // recursive call
+        let highNum =  Object.keys(romans).reduce((highestNum, cur) => {
+            if (num % cur < num) {
+                highestNum = cur; // overwrites previous values the last resulting the biggest one
+            }
+            return highestNum;
+        }, 0);
+        console.log(highNum);
 
-    //romans[keys(romans).
-    let highNum =  keys(romans).reduce((highestNum, cur) => {
-        if (num % cur === 0) {
-            highestNum = cur; // overwrites previous values the last resulting the biggest one
-        }
-        return highestNum;
-    }, 0);
-    
-    console.log(highNum);
+        outRoman=outRoman.concat(romans[highNum]);
+        console.log(outRoman);
 
-    while (num - highNum >= 0) {
-        outNumber.concat(romans[highNum]);
-        num = num - highNum;
-        console.log(outNumber)
+        num -= highNum;
+        console.log(num);
+        return convertToRoman(num, outRoman);
     }
-    return outNumber;
-}
+} 
 
-// ERROR:
-// convertToRoman(3433) --> "MMMCDCDCDCDXXXIII"
-
-
-
-
-
-
-
-// The simple answer is to divide the number by 1000 whatever is the quotient that is the number of 1000's in the amount. 
-// Then divide the remainder with the 100's the quotient will be the number of 100's. And then again divide the remainder with 10, the quotient will be the number of 10's
-
-function breakNumber(num) {
-    const placeValue = (num, res = [], factor = 1) => {
-        if (num) {
-            const val = (num % 10) * factor;
-            res.unshift(val);
-            return placeValue(Math.floor(num / 10), res, factor * 10);
-        };
-        return res;
-    };
-}
-
-//otra forma:
-function breakNumber(num) {
-    let i = 10;
-    while (num > i / 10) {
-        console.log(num % i - num % (i / 10));
-        i *= 10;
-    }
-}
-breakNumber(43928)
-
-// pistas:
-//  https://stackoverflow.com/questions/20015462/find-out-how-many-thousands-and-hundreds-and-tens-are-there-in-a-amount
 
 console.log(convertToRoman(2), 'II') 
 console.log(convertToRoman(3), 'III') 

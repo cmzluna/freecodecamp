@@ -9,8 +9,6 @@ https://www.rapidtables.com/convert/number/how-number-to-roman-numerals.html
 */
 
 function convertToRoman(num) {
-
-
     let i = 10;
     let arr = [];
 
@@ -19,9 +17,11 @@ function convertToRoman(num) {
         i *= 10;
     }
     
-    return arr;    
+    return arr.reduce((acum,cur) => {
+        return acum.concat(findRoman(cur));
+    }, '');    
 }
- 
+
 function findRoman(num) {
     let romans = {
         1: 'I',
@@ -37,17 +37,30 @@ function findRoman(num) {
         500: 'D',
         900: 'CM',
         1000: 'M'
-    } 
- 
-        return romans[keys(romans).reduce((highestNum, cur) => {
-            if (num%cur === 0) {
-                highestNum = cur; // overwrites previous values the last resulting the biggest one
-            }
-            return highestNum;
-        }, 0)].repeat(Number(num.toString().split('')[0]));
-}
- 
+    }
 
+    let outNumber = ''
+
+    //romans[keys(romans).
+    let highNum =  keys(romans).reduce((highestNum, cur) => {
+        if (num % cur === 0) {
+            highestNum = cur; // overwrites previous values the last resulting the biggest one
+        }
+        return highestNum;
+    }, 0);
+    
+    console.log(highNum);
+
+    while (num - highNum >= 0) {
+        outNumber.concat(romans[highNum]);
+        num = num - highNum;
+        console.log(outNumber)
+    }
+    return outNumber;
+}
+
+// ERROR:
+// convertToRoman(3433) --> "MMMCDCDCDCDXXXIII"
 
 
 

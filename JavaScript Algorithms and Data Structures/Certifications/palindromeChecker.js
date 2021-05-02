@@ -12,8 +12,8 @@ function palindrome(str) {
     let invertedWord = [];
 
     for (let i = (str.length - 1) ; i >= 0; i--) {
-        const letra = adaptedStr[i];
-        invertedWord.push(letra);
+        const letter = adaptedStr[i];
+        invertedWord.push(letter);
     }
   
     return (invertedWord.join('') === adaptedStr) ? true : false;

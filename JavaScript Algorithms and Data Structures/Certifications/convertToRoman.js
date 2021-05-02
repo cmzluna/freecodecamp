@@ -21,9 +21,7 @@ function convertToRoman(num) {
     
     return arr;    
 }
-
-2000
-
+ 
 function findRoman(num) {
     let romans = {
         1: 'I',
@@ -39,22 +37,16 @@ function findRoman(num) {
         500: 'D',
         900: 'CM',
         1000: 'M'
-    }
+    } 
  
-
-        return keys(romans).reduce((highestNum, cur) => {
+        return romans[keys(romans).reduce((highestNum, cur) => {
             if (num%cur === 0) {
-                highestNum = cur;
+                highestNum = cur; // overwrites previous values the last resulting the biggest one
             }
             return highestNum;
-        }, 0)
- 
-
-
+        }, 0)].repeat(Number(num.toString().split('')[0]));
 }
-
-
-
+ 
 
 
 

@@ -15,7 +15,7 @@ function convertToRoman(num, outRoman = "") {
         900: 'CM',
         1000: 'M'
     }
-
+ 
     if(num === 0) {
          // base case -> num = 0
         return outRoman;
@@ -37,7 +37,6 @@ function convertToRoman(num, outRoman = "") {
         return convertToRoman(num, outRoman);
     }
 } 
-
 
 console.log(convertToRoman(2), 'II') 
 console.log(convertToRoman(3), 'III') 

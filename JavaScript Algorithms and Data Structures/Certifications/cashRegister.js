@@ -19,15 +19,15 @@
  https://www.thewebflash.com/solution-for-floating-point-problems-in-javascript/
 
 0.1 + 0.2 = 0.30000000000000004   >???
- */
+ */ 
 
 
 //https://stackoverflow.com/questions/57546841/i-created-a-cash-register-function-for-freecodecamp-but-for-some-reason-the-la
 
 function checkCashRegister(price, cash, cid) {
   var change = cash-price;
- //
-  let change = 45.1;
+
+//  let change = 45.1;
   
   let currencies = [
     ["PENNY", .01],
@@ -39,28 +39,28 @@ function checkCashRegister(price, cash, cid) {
     ["TEN", 10],
     ["TWENTY", 20],
     ["ONE HUNDRED", 100]
-  ];
-
-  const INSUFFICIENT_FUNDS = {
-    status: 'INSUFFICIENT_FUNDS',
-    change: []
-  };
-  const CLOSED_CID = {
-    status: 'CLOSED',
-    change: []
-  };
-
+  ]; 
+let currencies = [
+  ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 10], ["TWENTY", 0], ["ONE HUNDRED", 100]]
+  ;
+  
   function findCash(change, coins = []) {
     if (change === 0) {
       // base case -> change = 0
-      return {status: "OPEN", change: coins} ;
-    } else if(){
-
+      return coins;
     } else {
       // recursive call
-      let highestUnit = currencies.reduce((highestNum, cur) => {
-        if (Number((change % cur[1]).toFixed(2)) < change) {
-          highestNum = [cur[0], parseInt(change / cur[1])*cur[1]]; // overwrites previous values the last resulting the biggest one 
+      let highestUnit = currencies.reduce((highestNum, cur, index) => {
+        if (Number(((change % cur[1]).toFixed(2)) < change) && cid[index][1]>=0) {
+         // let remainder = change - cid[index][1];
+
+         while( Number(((change % cid[index][1]).toFixed(2)) < change) ) {
+           change -= cid[index][1];
+           // descontar cid
+         }
+                  
+           
+          highestNum = [cur[0], parseInt(change / cur[1])*cur[1], index]; // overwrites previous values the last resulting the biggest one 
         }
         return highestNum;
       }, []);
@@ -68,22 +68,24 @@ function checkCashRegister(price, cash, cid) {
       coins.push(highestUnit); // guardar numero de monedas de .25 requeridas. 
       // console.log(coins);
 
+      // verificar si en CID hay ese monto
+
+
       remainAmt = change % highestUnit[1];
       change = Number(remainAmt.toFixed(2));  //used toFixed(2) to solve float problems, but it returns a string so converted back to Number ;-) !
-
       return findCash(change, coins);
     }
-
   }
 
-  findCash(change);
-  
-  // change = change = 45.1
-
-  // function should always return an object with a status key and a change key.
-  return change;
-
+ 
 }
+/* 
+
+
+else if (change === 0) {  // && cid igual al cambio 
+      return ({ status: "CLOSED", change: [coins] });
+    }
+
 
 
 function makeChange(origAmt, coins) {
@@ -110,22 +112,9 @@ function makeChange(origAmt, coins) {
   }
   coins[0] = parseInt(origAmt / .01);
 
-
-
-  if (origAmt === 0 && CID es igual al cambio) {   // usar array coins[]
-    return { status: "CLOSED", change: [...] }
-  }
-
-  Return { status: "CLOSED", change: [...] }
-  // with cash-in-drawer as the value for the key change
-  //  if it is equal to the change due.
-
-
-  // si llego hasta aca 
-  // if cash-in-drawer is less than the change due, or if you cannot return the exact change.
-  return { status: "INSUFFICIENT_FUNDS", change: [] }
-
-}
+*/
+ 
+ 
 
 
 

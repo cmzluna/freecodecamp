@@ -1,4 +1,13 @@
 //https://www.regular-expressions.info/tutorialcnt.html
+// https://flaviocopes.com/javascript-regular-expressions/#regular-expressions-choices
+// http://www.rexegg.com/regex-quantifiers.html
+
+// telephone regex 
+//https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
+
+
+// One of the most popular plugins for phone number formatting and parsing is the 'Libphonenumber' library released by Google. It was initially created to be used in Android operating systems. 
+
 
 function telephoneCheck(str) {
     let hasTenDigits = false;
@@ -9,9 +18,9 @@ function telephoneCheck(str) {
     
     // Write regular expressions here so that the Booleans contain the correct values
     hasTenDigits = /\d{10}/.test(str);
-    hasElevenDigits = //.test(str);
+    hasElevenDigits = /\d{11}/.test(str);
     hasPermittedCharsOnly = /[\d]*/.test(str);
-    hasCorrectParentheses = /1?\s?\(?\d{3}\s?\(?\d{3}[\s-]?\d{4}/.test(str);
+    hasCorrectParentheses = /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/.test(str);
     startsWithOne = /^1/.test(str);
 
 
@@ -30,6 +39,7 @@ function telephoneCheck(str) {
     }
     return /[12]*\s?\(?\d{3}\)?[\s-]*\d{3}[\s-]*\d{4}/.test(str);
 }
+
 
 console.log(telephoneCheck("1 555-555-5555"), true )
 console.log(telephoneCheck("1 (555) 555-5555"), true )
@@ -59,3 +69,18 @@ console.log(telephoneCheck("555-5555"), false )
 console.log(telephoneCheck("5555555"), false )
 
 console.log(telephoneCheck("123**&!!asdf#") , false )
+/*
+(\s)?\d{3}
+
+
+" 555"
+" (555"
+"-555"
+"(555"
+ 
+\(?(\d{3})\)?
+
+/^\(?(\d{3})\)?/.test(" 555");
+
+
+*/

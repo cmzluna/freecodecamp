@@ -40,11 +40,19 @@ function checkCashRegister(price, cash, cid) {
     ["TWENTY", 20],
     ["ONE HUNDRED", 100]
   ]; 
-let currencies = [
-  ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 10], ["TWENTY", 0], ["ONE HUNDRED", 100]]
+let cid = [
+  ["PENNY", 1.01],
+  ["NICKEL", 2.05],
+   ["DIME", 3.1], 
+   ["QUARTER", 4.25], 
+   ["ONE", 90], 
+   ["FIVE", 55], 
+   ["TEN", 10], 
+   ["TWENTY", 20], 
+   ["ONE HUNDRED", 100]]
   ;
   
-  function findCash(change, coins = []) {
+  function findCash(change, cid, coins = []) {
     if (change === 0) {
       // base case -> change = 0
       return coins;
@@ -52,18 +60,35 @@ let currencies = [
       // recursive call
       let highestUnit = currencies.reduce((highestNum, cur, index) => {
         if (Number(((change % cur[1]).toFixed(2)) < change) && cid[index][1]>=0) {
-         // let remainder = change - cid[index][1];
+        
+        let partialChange = parseInt(change / cur[1])*cur[1]; // 40
 
-         while( Number(((change % cid[index][1]).toFixed(2)) < change) ) {
-           change -= cid[index][1];
-           // descontar cid
-         }
-                  
-           
-          highestNum = [cur[0], parseInt(change / cur[1])*cur[1], index]; // overwrites previous values the last resulting the biggest one 
+          highestNum = [cur[0], partialChange, index]; // overwrites previous values the last resulting the biggest one 
         }
         return highestNum;
       }, []);
+        console.log(highestUnit);
+
+        coins.push(highestUnit);
+
+      if(cid[highestUnit[2]][1] >= highestUnit[1]) {
+        //dar 40
+        //restar change
+        console.log(cid[highestUnit[2]][1]);
+        remainAmt = change % highestUnit[1];
+        change = Number(remainAmt.toFixed(2));
+       
+        //descontar de cid
+        cid[highestUnit[2]][1] -= highestUnit[1];
+        //pushear array de retorno (incluido en paso previo)
+      } else {
+        // dar todo lo que hay en caja
+        change -= cid[highestUnit[2]][1];  // change is now 25.1 (if 20 in cid)
+        // restar change
+        cid[highestUnit[2]][1] = 0;
+        // pushear array de retorno
+      }
+
 
       coins.push(highestUnit); // guardar numero de monedas de .25 requeridas. 
       // console.log(coins);
@@ -71,15 +96,19 @@ let currencies = [
       // verificar si en CID hay ese monto
 
 
-      remainAmt = change % highestUnit[1];
-      change = Number(remainAmt.toFixed(2));  //used toFixed(2) to solve float problems, but it returns a string so converted back to Number ;-) !
-      return findCash(change, coins);
+      // remainAmt = change % highestUnit[1];
+      // change = Number(remainAmt.toFixed(2));  //used toFixed(2) to solve float problems, but it returns a string so converted back to Number ;-) !
+      return findCash(change, cid, coins);
     }
-  }
 
+  }
+ 
  
 }
 /* 
+
+
+
 
 
 else if (change === 0) {  // && cid igual al cambio 
